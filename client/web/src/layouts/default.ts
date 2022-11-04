@@ -32,7 +32,7 @@ export const loginLayout = new FASTElementLayout(
 export const defaultLayout = new FASTElementLayout(
   html`
     <div class="container">
-      <foundation-header>
+      <foundation-header logo-src="https://icotar.com/avatar/webtraining">
         ${repeat(
           (x) => x.config.allRoutes,
           html`
@@ -48,8 +48,29 @@ export const defaultLayout = new FASTElementLayout(
           `
         )}
         <div slot="menu-contents">
-        <!-- add menu items here -->
-
+          <!-- Example markup -->
+          <p>GROUP SLOT</p>
+          <zero-tree-view>
+              <zero-tree-item>
+                  <zero-icon variant="solid" name="location-arrow"></zero-icon>
+                  Slot Tree Item
+              </zero-tree-item>
+              <zero-tree-item>
+                  <zero-icon variant="solid" name="location-arrow"></zero-icon>
+                  Slot Tree Item
+              </zero-tree-item>
+          </zero-tree-view>
+          <p>GROUP SLOT 2</p>
+          <zero-tree-view>
+              <zero-tree-item>
+                  <zero-icon variant="solid" name="location-arrow"></zero-icon>
+                  Slot Tree Item 2
+              </zero-tree-item>
+              <zero-tree-item>
+                  <zero-icon variant="solid" name="location-arrow"></zero-icon>
+                  Slot Tree Item 2
+              </zero-tree-item>
+          </zero-tree-view>        
         </div>
       </foundation-header>
       <div class="content">
