@@ -22,6 +22,11 @@ export const HomeTemplate = html<Home>`
           :columns=${x => x.columns}
         ></entity-management>
     </div>
+    <div>
+      <zero-anchor @click=${(x) => x.navigation.navigateTo("/playground")}>
+        Playground
+      </zero-anchor>
+    </div>
     <div class="top-layout">
         <zero-card class="positions-card">
             <span class="card-title">Positions</span>

@@ -13,6 +13,8 @@ import {defaultLayout, loginLayout} from '../layouts';
 import {Home} from './home/home';
 import {NotFound} from './not-found/not-found';
 import { MarketdataComponent } from './playground/playground';
+import { Order } from './order/order';
+import { Reporting } from './reporting/reporting';
 
 export class MainRouterConfig extends RouterConfiguration<LoginSettings> {
   constructor(
@@ -27,6 +29,8 @@ export class MainRouterConfig extends RouterConfiguration<LoginSettings> {
   public allRoutes = [
     { index: 1, path: 'home', title: 'Home', icon: 'home', variant: 'solid' },
     { index: 2, path: 'playground', title: 'Playground', icon: 'home', variant: 'solid' },
+    { index: 3, path: 'order', title: 'Order', icon: 'home', variant: 'solid' },
+    { index: 4, path: 'reporting', title: 'Reporting', icon: 'home', variant: 'solid' },
   ];
 
   public configure() {
@@ -41,6 +45,8 @@ export class MainRouterConfig extends RouterConfiguration<LoginSettings> {
       {path: 'home', element: Home, title: 'Home', name: 'home', settings: commonSettings},
       {path: 'not-found', element: NotFound, title: 'Not Found', name: 'not-found'},
       {path: 'playground', element: MarketdataComponent, title: 'Playground', name: 'playground', settings: commonSettings},
+      {path: 'order', element: Order, title: 'Order', name: 'order', settings: commonSettings},
+      {path: 'reporting', element: Reporting, title: 'Reporting', name: 'reporting', settings: commonSettings},
     );
 
     const auth = this.auth;

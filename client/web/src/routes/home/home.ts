@@ -4,6 +4,8 @@ import {HomeStyles as styles} from './home.styles';
 import {EntityManagement} from '@genesislcap/foundation-entity-management';
 import {ZeroGridPro} from '@genesislcap/foundation-zero-grid-pro';
 import {Connect} from '@genesislcap/foundation-comms';
+import {Navigation} from '@genesislcap/foundation-header';
+import {inject} from '@microsoft/fast-foundation';
 
 EntityManagement; //imported from '@genesislcap/foundation-entity-management' to display Trade grid
 
@@ -57,6 +59,7 @@ const COLUMNS = [
   styles,
 })
 export class Home extends FASTElement {
+  @inject(Navigation) navigation!: Navigation;
   @observable columns: any = COLUMNS;
 
   public positionsGrid!: ZeroGridPro;
