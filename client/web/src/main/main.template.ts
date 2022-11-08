@@ -16,5 +16,6 @@ export const MainTemplate: ViewTemplate<MainApplication> = html`
   <fast-router
     :config=${(x) => x.config}
     :navigation=${(x) => x.navigation}
+    @luminance-icon-clicked=${(x) => x.onDarkModeToggle()}
   ></fast-router>
 `;
