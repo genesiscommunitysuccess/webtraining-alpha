@@ -1,6 +1,7 @@
 import {html, repeat, when} from '@microsoft/fast-element';
 import type {Order} from './order';
 import { sync } from '@genesislcap/foundation-utils';
+import {orderColumnDefs} from './orderColumnDefs';
 
 export const OrderTemplate = html<Order>`
 <zero-card>
@@ -33,11 +34,16 @@ export const OrderTemplate = html<Order>`
   <div>
     <zero-button @click=${x=> x.insertOrder()}>Add Order</zero-button>
   </div>
-  <zero-grid-pro>
+  <zero-grid-pro rowHeight="20" persist-column-state-key='order-grid-settings'>
       <grid-pro-genesis-datasource
           resourceName="ALL_ORDERS"
           orderBy="ORDER_ID">
       </grid-pro-genesis-datasource>
+      ${repeat(() => orderColumnDefs, html`
+      <grid-pro-column :definition="${x => x}" />
+      `)}
+      <grid-pro-column :definition="${x => x.singleOrderActionColDef}" />
+      <grid-pro-column :definition="${x => x.cancelOrderActionColDef}" />
   </zero-grid-pro>
   ${when(x => x.serverResponse, html`
   <span>${x=> x.serverResponse.MESSAGE_TYPE == 'EVENT_ACK' ?

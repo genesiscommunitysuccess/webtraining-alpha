@@ -84,4 +84,52 @@ export class Order extends FASTElement {
     });
     return guid;
   }
+
+  public singleOrderActionColDef = {
+    headerName: 'Action',
+    minWidth: 150,
+    maxWidth: 150,
+    cellRenderer: 'action',
+    cellRendererParams: {
+      actionClick: async (rowData) => {
+        console.log(rowData);
+      },
+      actionName: 'Print Order',
+      appearance: 'primary-gradient',
+    },
+    pinned: 'right',
+  };
+
+  public cancelOrderActionColDef = {
+    headerName: 'Cancel',
+    minWidth: 150,
+    maxWidth: 150,
+    cellRenderer: 'action',
+    cellRendererParams: {
+      actionClick: async (rowData) => {
+        this.serverResponse = await this.connect.commitEvent('EVENT_ORDER_CANCEL', {
+          DETAILS: {
+            ORDER_ID: rowData.ORDER_ID,
+            INSTRUMENT_ID: rowData.INSTRUMENT_ID,
+            QUANTITY: rowData.QUANTITY,
+            PRICE: rowData.PRICE,
+            SIDE: rowData.SIDE,
+            NOTES: rowData.NOTES,
+          },
+        })
+        console.log(this.serverResponse);
+
+        if (this.serverResponse.MESSAGE_TYPE == 'EVENT_NACK') {
+          const errorMsg = this.serverResponse.ERROR[0].TEXT;
+          alert(errorMsg);
+        } else {
+          alert("Order canceled successfully.")
+        }
+      },
+      actionName: 'Cancel Order',
+      appearance: 'primary-gradient',
+    },
+    pinned: 'right',
+  };
+
 }
