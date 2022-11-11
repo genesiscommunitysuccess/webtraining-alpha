@@ -51,15 +51,11 @@ export class MarketdataComponent extends FASTElement {
       const msg = await this.connect.snapshot('ALL_INSTRUMENTS'); //get a snapshot of data from ALL_INTRUMENTS data server
       console.log("msg"); //add this to look into the data returned and understand its structure
 
+      console.log(this.getPMarketData("1"));
+      console.log(this.getPMarketData("2"));
+
       this.allInstruments = msg.ROW?.map(instrument => ({
-        name: instrument.INSTRUMENT_NAME, price: 0}));
-      this.allInstruments.forEach(
-        async function (value) {
-          const vPrice = await this.getMarketData(value.name);
-          value.price = vPrice;
-        }
-      );
-      console.log(this.allInstruments);
+        name: instrument.INSTRUMENT_NAME, price: this.getMarketData(instrument.INSTRUMENT_ID).then(x => x)}));
     }
 
     public getLastPriceRealTime(instrumentName: string) {
@@ -67,13 +63,35 @@ export class MarketdataComponent extends FASTElement {
         return this.lastPrices[instrumentIndex];
     }
 
-    public async getMarketData(instrumentName: string) {
+    public async getMarketData(instrumentId: string) {
       const msg = await this.connect.request('INSTRUMENT_MARKET_DATA', {
         REQUEST: {
-          INSTRUMENT_ID: instrumentName,
+          INSTRUMENT_ID: instrumentId,
         }});
       console.log(msg);
   
-      return msg.REPLY[0].LAST_PRICE;
+      return msg.REPLY[0]?.LAST_PRICE;
+    }
+
+    public getPMarketData(instrumentId: string) : string {
+      var lastPrice = "222";
+      var promisseMktData = Promise.resolve(
+        this.connect.request('INSTRUMENT_MARKET_DATA', {
+          REQUEST: {
+            INSTRUMENT_ID: instrumentId,
+          }})
+      );
+
+      promisseMktData.then( function(value) {
+        console.log("Deu certo a promessa! Valor é ..", value.REPLY[0]?.LAST_PRICE);
+        lastPrice = value.REPLY[0]?.LAST_PRICE;
+      });
+
+      return lastPrice;
+
+      promisseMktData.catch( function(reason) {
+        console.log("Nao vou manter minha promessa :( ...", reason);
+        return 0;
+      });
     }
 }

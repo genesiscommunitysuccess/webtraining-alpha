@@ -47,7 +47,7 @@ export class Order extends FASTElement {
   public async insertOrder() {
     this.serverResponse = await this.connect.commitEvent('EVENT_ORDER_INSERT', {
       DETAILS: {
-        ORDER_ID: this.getGUID(),
+        ORDER_ID: Date.now(), 
         INSTRUMENT_ID: this.instrument,
         QUANTITY: this.quantity,
         PRICE: this.price,
@@ -74,17 +74,7 @@ export class Order extends FASTElement {
 
     this.lastPrice = msg.REPLY[0].LAST_PRICE;
   }
-
-  private getGUID(): string {
-    let d = new Date().getTime();
-    const guid = "RNDxxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
-        const r = (d + Math.random() * 16) % 16 | 0;
-        d = Math.floor(d / 16);
-        return (c === "x" ? r : (r & 0x3 | 0x8)).toString(16);
-    });
-    return guid;
-  }
-
+  
   public singleOrderActionColDef = {
     headerName: 'Action',
     minWidth: 150,
