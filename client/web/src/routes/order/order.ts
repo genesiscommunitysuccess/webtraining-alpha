@@ -2,7 +2,6 @@ import {customElement, FASTElement, observable} from '@microsoft/fast-element';
 import {OrderTemplate as template} from './order.template';
 import {OrderStyles as styles} from './order.styles';
 import {Connect} from '@genesislcap/foundation-comms';
-import {logger} from '../../utils';
 
 const name = 'order-route';
 

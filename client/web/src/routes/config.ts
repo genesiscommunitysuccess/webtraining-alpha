@@ -15,6 +15,7 @@ import {NotFound} from './not-found/not-found';
 import { MarketdataComponent } from './playground/playground';
 import { Order } from './order/order';
 import { Reporting } from './reporting/reporting';
+import { Trade } from './trade/trade';
 
 export class MainRouterConfig extends RouterConfiguration<LoginSettings> {
   constructor(
@@ -31,6 +32,8 @@ export class MainRouterConfig extends RouterConfiguration<LoginSettings> {
     { index: 2, path: 'playground', title: 'Playground', icon: 'home', variant: 'solid' },
     { index: 3, path: 'order', title: 'Order', icon: 'home', variant: 'solid' },
     { index: 4, path: 'reporting', title: 'Reporting', icon: 'home', variant: 'solid' },
+    { index: 4, path: 'trade', title: 'Trade', icon: 'home', variant: 'solid' },
+
   ];
 
   public configure() {
@@ -47,6 +50,8 @@ export class MainRouterConfig extends RouterConfiguration<LoginSettings> {
       {path: 'playground', element: MarketdataComponent, title: 'Playground', name: 'playground', settings: commonSettings},
       {path: 'order', element: Order, title: 'Order', name: 'order', settings: commonSettings},
       {path: 'reporting', element: Reporting, title: 'Reporting', name: 'reporting', settings: commonSettings},
+      {path: 'trade', element: Trade, title: 'Trade', name: 'trade', settings: commonSettings},
+
     );
 
     const auth = this.auth;
