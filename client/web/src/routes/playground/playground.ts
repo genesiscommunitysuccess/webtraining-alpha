@@ -43,26 +43,12 @@ export class MarketdataComponent extends FASTElement {
     @observable instruments: String[] = ["MSFT", "AAPL"];
     @observable lastPrices: number[] = [101.23, 227.12];
 
-    @observable public allInstruments: Array<{id: any, name: any, price: any}>; //add this property
+    @observable public allInstruments: Array<{id: any, name: any, price: any}> = []; //add this property
 
     public async connectedCallback() { //add this method to Order class
       super.connectedCallback(); //FASTElement implementation
 
-      const msg = await this.connect.snapshot('ALL_INSTRUMENTS'); //get a snapshot of data from ALL_INTRUMENTS data server
-      console.log("msg"); //add this to look into the data returned and understand its structure
-
       await this.setAllAllInstruments();
-      /*
-      this.allInstruments = msg.ROW?.map(instrument => ({
-        id: instrument.INSTRUMENT_ID,
-        name: instrument.INSTRUMENT_NAME, 
-        price: 0}));
-      for (let index = 0; index < this.allInstruments.length; index++) {
-        var lastPrice = await this.getMarketDataLastPrice(this.allInstruments[index].id);
-        console.log("Last Price:", lastPrice)
-        this.allInstruments[index].price = lastPrice;
-      }
-      */
     }
 
     public getLastPriceRealTime(instrumentName: string) {
@@ -77,19 +63,15 @@ export class MarketdataComponent extends FASTElement {
         }});
       console.log(msg);
   
-      return msg.REPLY[0]?.LAST_PRICE;
+      return msg.REPLY[0] ? msg.REPLY[0].LAST_PRICE : "N/A";
     }
 
     private async setAllAllInstruments() {
       const msg = await this.connect.snapshot('ALL_INSTRUMENTS'); //get a snapshot of data from ALL_INTRUMENTS data server
-      this.allInstruments = msg.ROW?.map(instrument => ({
-        id: instrument.INSTRUMENT_ID,
-        name: instrument.INSTRUMENT_NAME, 
-        price: 0}));
-      for (let index = 0; index < this.allInstruments.length; index++) {
-        var lastPrice = await this.getMarketDataLastPrice(this.allInstruments[index].id);
-        console.log("Last Price:", lastPrice)
-        this.allInstruments[index].price = lastPrice;
-      }
+      msg.ROW.forEach(instrument => {
+          this.getMarketDataLastPrice(instrument.INSTRUMENT_ID).then( price => {
+            this.allInstruments.push({id: instrument.INSTRUMENT_ID, name: instrument.INSTRUMENT_NAME, price: price});
+          });
+      });
     }
 }
