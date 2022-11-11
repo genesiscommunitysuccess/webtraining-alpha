@@ -43,7 +43,7 @@ export class MarketdataComponent extends FASTElement {
     @observable instruments: String[] = ["MSFT", "AAPL"];
     @observable lastPrices: number[] = [101.23, 227.12];
 
-    @observable public allInstruments: Array<{name: any, price: any}>; //add this property
+    @observable public allInstruments: Array<{id: any, name: any, price: any}>; //add this property
 
     public async connectedCallback() { //add this method to Order class
       super.connectedCallback(); //FASTElement implementation
@@ -51,11 +51,18 @@ export class MarketdataComponent extends FASTElement {
       const msg = await this.connect.snapshot('ALL_INSTRUMENTS'); //get a snapshot of data from ALL_INTRUMENTS data server
       console.log("msg"); //add this to look into the data returned and understand its structure
 
-      console.log(this.getPMarketData("1"));
-      console.log(this.getPMarketData("2"));
-
+      await this.setAllAllInstruments();
+      /*
       this.allInstruments = msg.ROW?.map(instrument => ({
-        name: instrument.INSTRUMENT_NAME, price: this.getMarketData(instrument.INSTRUMENT_ID).then(x => x)}));
+        id: instrument.INSTRUMENT_ID,
+        name: instrument.INSTRUMENT_NAME, 
+        price: 0}));
+      for (let index = 0; index < this.allInstruments.length; index++) {
+        var lastPrice = await this.getMarketDataLastPrice(this.allInstruments[index].id);
+        console.log("Last Price:", lastPrice)
+        this.allInstruments[index].price = lastPrice;
+      }
+      */
     }
 
     public getLastPriceRealTime(instrumentName: string) {
@@ -63,7 +70,7 @@ export class MarketdataComponent extends FASTElement {
         return this.lastPrices[instrumentIndex];
     }
 
-    public async getMarketData(instrumentId: string) {
+    public async getMarketDataLastPrice(instrumentId: string) {
       const msg = await this.connect.request('INSTRUMENT_MARKET_DATA', {
         REQUEST: {
           INSTRUMENT_ID: instrumentId,
@@ -73,25 +80,16 @@ export class MarketdataComponent extends FASTElement {
       return msg.REPLY[0]?.LAST_PRICE;
     }
 
-    public getPMarketData(instrumentId: string) : string {
-      var lastPrice = "222";
-      var promisseMktData = Promise.resolve(
-        this.connect.request('INSTRUMENT_MARKET_DATA', {
-          REQUEST: {
-            INSTRUMENT_ID: instrumentId,
-          }})
-      );
-
-      promisseMktData.then( function(value) {
-        console.log("Deu certo a promessa! Valor é ..", value.REPLY[0]?.LAST_PRICE);
-        lastPrice = value.REPLY[0]?.LAST_PRICE;
-      });
-
-      return lastPrice;
-
-      promisseMktData.catch( function(reason) {
-        console.log("Nao vou manter minha promessa :( ...", reason);
-        return 0;
-      });
+    private async setAllAllInstruments() {
+      const msg = await this.connect.snapshot('ALL_INSTRUMENTS'); //get a snapshot of data from ALL_INTRUMENTS data server
+      this.allInstruments = msg.ROW?.map(instrument => ({
+        id: instrument.INSTRUMENT_ID,
+        name: instrument.INSTRUMENT_NAME, 
+        price: 0}));
+      for (let index = 0; index < this.allInstruments.length; index++) {
+        var lastPrice = await this.getMarketDataLastPrice(this.allInstruments[index].id);
+        console.log("Last Price:", lastPrice)
+        this.allInstruments[index].price = lastPrice;
+      }
     }
 }
