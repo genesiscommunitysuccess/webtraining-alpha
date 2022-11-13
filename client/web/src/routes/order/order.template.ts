@@ -34,10 +34,14 @@ export const OrderTemplate = html<Order>`
   <div>
     <zero-button @click=${x=> x.insertOrder()}>Add Order</zero-button>
   </div>
+  <div>
+    <zero-text-field :value=${sync(x=> x.minimumQuantity)}>Minimum Quantity Displayed</zero-text-field>
+  </div>  
   <zero-grid-pro rowHeight="20" persist-column-state-key='order-grid-settings'>
       <grid-pro-genesis-datasource
           resourceName="ALL_ORDERS"
-          orderBy="ORDER_ID">
+          orderBy="ORDER_ID"
+          criteria="QUANTITY >= ${x=>x.minimumQuantity}">
       </grid-pro-genesis-datasource>
       ${repeat(() => orderColumnDefs, html`
       <grid-pro-column :definition="${x => x}" />

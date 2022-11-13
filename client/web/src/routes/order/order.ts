@@ -1,4 +1,4 @@
-import {customElement, FASTElement, observable} from '@microsoft/fast-element';
+import {customElement, FASTElement, observable, attr} from '@microsoft/fast-element';
 import {OrderTemplate as template} from './order.template';
 import {OrderStyles as styles} from './order.styles';
 import {Connect} from '@genesislcap/foundation-comms';
@@ -20,6 +20,8 @@ export class Order extends FASTElement {
   @observable public side: string;
   @observable public notes: string;
 
+  @attr public minimumQuantity: number;
+
   @observable public allInstruments: Array<{value: string, label: string}>; //add this property
   @observable public sideOptions: Array<{value: string, label: string}>; //add this property
 
@@ -31,6 +33,8 @@ export class Order extends FASTElement {
 
   public async connectedCallback() { //add this method to Order class
     super.connectedCallback(); //FASTElement implementation
+
+    this.minimumQuantity = 0;
 
     const msg = await this.connect.snapshot('ALL_INSTRUMENTS'); //get a snapshot of data from ALL_INTRUMENTS data server
     console.log(msg); //add this to look into the data returned and understand its structure
@@ -120,5 +124,4 @@ export class Order extends FASTElement {
     },
     pinned: 'right',
   };
-
 }
