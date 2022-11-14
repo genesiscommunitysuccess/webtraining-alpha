@@ -14,10 +14,10 @@ import {Home} from './home/home';
 import {NotFound} from './not-found/not-found';
 import { MarketdataComponent } from './playground/playground';
 import { Order } from './order/order';
-import { Reporting } from './reporting/reporting';
 import { Trade } from './trade/trade';
 import { OrdersAgGrid } from './ordersaggrid/ordersaggrid';
 import { UserComponent } from './user/user';
+import {Reporting} from '@genesislcap/foundation-reporting';
 
 export class MainRouterConfig extends RouterConfiguration<LoginSettings> {
   constructor(

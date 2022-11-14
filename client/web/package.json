@@ -66,6 +66,7 @@
     "@genesislcap/foundation-utils": "^5.0.0",
     "@genesislcap/foundation-zero": "^5.0.0",
     "@genesislcap/foundation-zero-grid-pro": "^5.0.0",
+    "@genesislcap/foundation-reporting": "1.0.1-alpha-7ea7de2.0",
     "@genesislcap/grid-pro": "^5.0.0",
     "@microsoft/fast-components": "^2.21.6",
     "@microsoft/fast-element": "^1.7.0",
