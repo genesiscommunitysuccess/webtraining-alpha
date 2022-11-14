@@ -2,6 +2,7 @@ import {html, repeat, when} from '@microsoft/fast-element';
 import type {Order} from './order';
 import { sync } from '@genesislcap/foundation-utils';
 import {orderColumnDefs} from './orderColumnDefs';
+import {OrderStyles} from "./order.styles";
 
 export const OrderTemplate = html<Order>`
 <zero-card>
@@ -38,6 +39,7 @@ export const OrderTemplate = html<Order>`
     <zero-text-field :value=${sync(x=> x.minimumQuantity)}>Minimum Quantity Displayed</zero-text-field>
   </div>  
   <zero-grid-pro rowHeight="20" persist-column-state-key='order-grid-settings'>
+      <slotted-styles :styles=${() => OrderStyles}></slotted-styles>
       <grid-pro-genesis-datasource
           resourceName="ALL_ORDERS"
           orderBy="ORDER_ID"
