@@ -17,8 +17,12 @@ export const OrderTemplate = html<Order>`
     <span>Last price: ${x => x.lastPrice}</span>
   </div>
   <div>
+    <!-- 
     <zero-text-field required :value=${sync(x=> x.quantity)}>Quantity</zero-text-field>
     <zero-text-field :value=${sync(x=> x.price)}>Price</zero-text-field>
+    -->
+    <ui-training-text-field required :value=${sync(x=> x.quantity)}>Quantity</ui-training-text-field>
+    <ui-training-text-field :value=${sync(x=> x.price)}>Price</ui-training-text-field>
   </div>
   <div>
     <span>Total: ${x => x.quantity * x.price}</span>
@@ -33,7 +37,8 @@ export const OrderTemplate = html<Order>`
     <zero-text-area :value=${sync(x=> x.notes)}>Notes</zero-text-area>
   </div>
   <div>
-    <zero-button @click=${x=> x.insertOrder()}>Add Order</zero-button>
+    <!-- <zero-button @click=${x=> x.insertOrder()}>Add Order</zero-button> -->
+    <ui-training-button @click=${x=> x.insertOrder()}>Add Order<//ui-training-button>
   </div>
   <div>
     <zero-text-field :value=${sync(x=> x.minimumQuantity)}>Minimum Quantity Displayed</zero-text-field>
