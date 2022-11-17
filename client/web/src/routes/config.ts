@@ -15,9 +15,9 @@ import {NotFound} from './not-found/not-found';
 import {MarketdataComponent} from './playground/playground';
 import {Order} from './order/order';
 import {Trade} from './trade/trade';
-import {OrdersAgGrid} from './ordersaggrid/ordersaggrid';
 import {UserComponent} from './user/user';
 import {Reporting} from '@genesislcap/foundation-reporting';
+import { CustomOrderPage } from './custom-order/custom-order';
 
 export class MainRouterConfig extends RouterConfiguration<LoginSettings> {
   constructor(
@@ -35,7 +35,7 @@ export class MainRouterConfig extends RouterConfiguration<LoginSettings> {
     {index: 3, path: 'order', title: 'Order', icon: 'home', variant: 'solid'},
     {index: 4, path: 'reporting', title: 'Reporting', icon: 'home', variant: 'solid'},
     {index: 5, path: 'trade', title: 'Trade', icon: 'home', variant: 'solid'},
-    {index: 6, path: 'ordersaggrid', title: 'OrdersAgGrid', icon: 'home', variant: 'solid'},
+    {index: 6, path: 'custom-order', title: 'Custom Order Grid', icon: 'home', variant: 'solid'},
     {index: 7, path: 'user', title: 'User', icon: 'home', variant: 'solid'},
   ];
 
@@ -54,7 +54,7 @@ export class MainRouterConfig extends RouterConfiguration<LoginSettings> {
       {path: 'order', element: Order, title: 'Order', name: 'order', settings: commonSettings},
       {path: 'reporting', element: Reporting, title: 'Reporting', name: 'reporting', settings: commonSettings},
       {path: 'trade', element: Trade, title: 'Trade', name: 'trade', settings: commonSettings},
-      {path: 'ordersaggrid', element: OrdersAgGrid, title: 'OrdersAgGrid', name: 'ordersaggrid', settings: commonSettings},
+      {path: 'custom-order', element: CustomOrderPage, title: 'Custom Order', name: 'custom-order', settings: commonSettings},
       {path: 'user', element: UserComponent, title: 'User', name: 'user', settings: commonSettings},
     );
 

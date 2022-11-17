@@ -1,7 +1,7 @@
 
 import {zeroGridProStyles} from '@genesislcap/foundation-zero-grid-pro';
 import {css, ElementStyles} from '@microsoft/fast-element';
-import {BUY_SIDE, SELL_SIDE, NEW_TRADE_STATUS, CANCELLED_TRADE_STATUS} from './colors';
+import {BUY_SIDE, SELL_SIDE} from './colors';
 
 export const positionsGridStyles: ElementStyles = css`
   ${zeroGridProStyles}
@@ -20,35 +20,19 @@ export const positionsGridStyles: ElementStyles = css`
     width: 3px;
   }
 
-  .buy-side-trade.status-cell::after {
+  .buy-direction-order.status-cell::after {
     background-color: ${BUY_SIDE};
   }
 
-  .buy-side-trade {
+  .buy-direction-order {
     color: ${BUY_SIDE};
   }
 
-  .sell-side-trade.status-cell::after {
+  .sell-direction-order.status-cell::after {
     background-color: ${SELL_SIDE};
   }
 
-  .sell-side-trade {
+  .sell-direction-order {
     color: ${SELL_SIDE};
-  }
-
-  .new-status-trade.status-cell::after {
-    background-color: ${NEW_TRADE_STATUS};
-  }
-
-  .new-status-trade {
-    color: ${NEW_TRADE_STATUS};
-  }
-
-  .cancel-status-trade.status-cell::after {
-    background-color: ${CANCELLED_TRADE_STATUS};
-  }
-
-  .cancel-status-trade {
-    color: ${CANCELLED_TRADE_STATUS};
   }
 `;
