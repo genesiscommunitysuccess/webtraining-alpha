@@ -15,6 +15,10 @@ export const alphaTextFieldStyles = (
     width: 20%;
     flex-direction: column;
     caret-color : #3107ba;
+    
+  }
+
+  .control {
     color: #3107ba;
   }
 

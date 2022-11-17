@@ -17,13 +17,13 @@ export class Order extends FASTElement {
   @observable public lastPrice: number;
   @observable public quantity: number;
   @observable public price: number;
-  @observable public side: string;
+  @observable public direction: string;
   @observable public notes: string;
 
   @attr public minimumQuantity: number;
 
   @observable public allInstruments: Array<{value: string, label: string}>; // add this property
-  @observable public sideOptions: Array<{value: string, label: string}>; // add this property
+  @observable public directionOptions: Array<{value: string, label: string}>; // add this property
 
   @observable public serverResponse;
 
@@ -43,8 +43,8 @@ export class Order extends FASTElement {
 
     const metadata = await this.connect.getMetadata('ALL_ORDERS');
     console.log(metadata);
-    const sideField = metadata.FIELD?.find(field => field.NAME == 'DIRECTION');
-    this.sideOptions = Array.from(sideField.VALID_VALUES).map(v => ({value: v, label: v}));
+    const directionField = metadata.FIELD?.find(field => field.NAME == 'DIRECTION');
+    this.directionOptions = Array.from(directionField.VALID_VALUES).map(v => ({value: v, label: v}));
   }
 
   public async insertOrder() {
@@ -54,7 +54,7 @@ export class Order extends FASTElement {
         INSTRUMENT_ID: this.instrument,
         QUANTITY: this.quantity,
         PRICE: this.price,
-        SIDE: this.side,
+        DIRECTION: this.direction,
         NOTES: this.notes,
       },
     });
@@ -106,7 +106,7 @@ export class Order extends FASTElement {
             INSTRUMENT_ID: rowData.INSTRUMENT_ID,
             QUANTITY: rowData.QUANTITY,
             PRICE: rowData.PRICE,
-            SIDE: rowData.SIDE,
+            DIRECTION: rowData.direction,
             NOTES: rowData.NOTES,
           },
         });

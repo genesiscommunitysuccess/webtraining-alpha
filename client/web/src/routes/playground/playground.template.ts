@@ -22,6 +22,7 @@ export const marketDataComponent = html<MarketdataComponent>`
     `, {positioning: true})}
     </ul>
 
+    <!--
     <ui-training-design-system-provider>
       <ui-training-button appearance="training-green">UI Training Design System Button</ui-training-button>
     </ui-training-design-system-provider>
@@ -29,5 +30,6 @@ export const marketDataComponent = html<MarketdataComponent>`
     <zero-design-system-provider>
       <zero-button appearance="primary-gradient">Zero Design System Button</zero-button>
     </zero-design-system-provider>
+    -->
   </div>
 `;
