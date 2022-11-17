@@ -17,13 +17,13 @@ export class Order extends FASTElement {
   @observable public lastPrice: number;
   @observable public quantity: number;
   @observable public price: number;
-  @observable public side: string;
+  @observable public direction: string;
   @observable public notes: string;
 
   @attr public minimumQuantity: number;
 
-  @observable public allInstruments: Array<{value: string, label: string}>; //add this property
-  @observable public sideOptions: Array<{value: string, label: string}>; //add this property
+  @observable public allInstruments: Array<{value: string, label: string}>; // add this property
+  @observable public directionOptions: Array<{value: string, label: string}>; // add this property
 
   @observable public serverResponse;
 
@@ -31,30 +31,30 @@ export class Order extends FASTElement {
     super();
   }
 
-  public async connectedCallback() { //add this method to Order class
-    super.connectedCallback(); //FASTElement implementation
+  public async connectedCallback() { // add this method to Order class
+    super.connectedCallback(); // FASTElement implementation
 
     this.minimumQuantity = 0;
 
-    const msg = await this.connect.snapshot('ALL_INSTRUMENTS'); //get a snapshot of data from ALL_INTRUMENTS data server
-    console.log(msg); //add this to look into the data returned and understand its structure
+    const msg = await this.connect.snapshot('ALL_INSTRUMENTS'); // get a snapshot of data from ALL_INTRUMENTS data server
+    console.log(msg); // add this to look into the data returned and understand its structure
     this.allInstruments = msg.ROW?.map(instrument => ({
       value: instrument.INSTRUMENT_ID, label: instrument.INSTRUMENT_NAME}));
 
     const metadata = await this.connect.getMetadata('ALL_ORDERS');
     console.log(metadata);
-    const sideField = metadata.FIELD?.find(field => field.NAME == 'DIRECTION');
-    this.sideOptions = Array.from(sideField.VALID_VALUES).map(v => ({value: v, label: v}));
+    const directionField = metadata.FIELD?.find(field => field.NAME == 'DIRECTION');
+    this.directionOptions = Array.from(directionField.VALID_VALUES).map(v => ({value: v, label: v}));
   }
 
   public async insertOrder() {
     this.serverResponse = await this.connect.commitEvent('EVENT_ORDER_INSERT', {
       DETAILS: {
-        ORDER_ID: Date.now(), 
+        ORDER_ID: Date.now(),
         INSTRUMENT_ID: this.instrument,
         QUANTITY: this.quantity,
         PRICE: this.price,
-        SIDE: this.side,
+        DIRECTION: this.direction,
         NOTES: this.notes,
       },
     });
@@ -64,7 +64,7 @@ export class Order extends FASTElement {
       const errorMsg = this.serverResponse.ERROR[0].TEXT;
       alert(errorMsg);
     } else {
-      alert("Order inserted successfully.")
+      alert('Order inserted successfully.');
     }
   }
 
@@ -77,7 +77,7 @@ export class Order extends FASTElement {
 
     this.lastPrice = msg.REPLY[0].LAST_PRICE;
   }
-  
+
   public singleOrderActionColDef = {
     headerName: 'Action',
     minWidth: 150,
@@ -106,17 +106,17 @@ export class Order extends FASTElement {
             INSTRUMENT_ID: rowData.INSTRUMENT_ID,
             QUANTITY: rowData.QUANTITY,
             PRICE: rowData.PRICE,
-            SIDE: rowData.SIDE,
+            DIRECTION: rowData.direction,
             NOTES: rowData.NOTES,
           },
-        })
+        });
         console.log(this.serverResponse);
 
         if (this.serverResponse.MESSAGE_TYPE == 'EVENT_NACK') {
           const errorMsg = this.serverResponse.ERROR[0].TEXT;
           alert(errorMsg);
         } else {
-          alert("Order canceled successfully.")
+          alert('Order canceled successfully.');
         }
       },
       actionName: 'Cancel Order',

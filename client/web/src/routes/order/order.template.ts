@@ -1,8 +1,8 @@
 import {html, repeat, when} from '@microsoft/fast-element';
 import type {Order} from './order';
-import { sync } from '@genesislcap/foundation-utils';
+import {sync} from '@genesislcap/foundation-utils';
 import {orderColumnDefs} from './orderColumnDefs';
-import {OrderStyles} from "./order.styles";
+import {OrderStyles} from './order.styles';
 
 export const OrderTemplate = html<Order>`
 <zero-card>
@@ -21,14 +21,16 @@ export const OrderTemplate = html<Order>`
     <zero-text-field required :value=${sync(x=> x.quantity)}>Quantity</zero-text-field>
     <zero-text-field :value=${sync(x=> x.price)}>Price</zero-text-field>
     -->
-    <ui-training-text-field required :value=${sync(x=> x.quantity)}>Quantity</ui-training-text-field>
-    <ui-training-text-field :value=${sync(x=> x.price)}>Price</ui-training-text-field>
+    <ui-training-design-system-provider>
+      <ui-training-text-field required :value=${sync(x=> x.quantity)}>Quantity</ui-training-text-field>
+      <ui-training-text-field :value=${sync(x=> x.price)}>Price</ui-training-text-field>
+    </ui-training-design-system-provider>
   </div>
   <div>
     <span>Total: ${x => x.quantity * x.price}</span>
-    <span>Side</span>
-    <zero-select :value=${sync(x=> x.side)}>
-      ${repeat(x => x.sideOptions, html`
+    <span>Direction</span>
+    <zero-select :value=${sync(x=> x.direction)}>
+      ${repeat(x => x.directionOptions, html`
         <zero-option value=${x => x.value}>${x => x.label}</zero-option>
       `)}
     </zero-select>
@@ -38,7 +40,9 @@ export const OrderTemplate = html<Order>`
   </div>
   <div>
     <!-- <zero-button @click=${x=> x.insertOrder()}>Add Order</zero-button> -->
-    <ui-training-button @click=${x=> x.insertOrder()}>Add Order<//ui-training-button>
+    <ui-training-design-system-provider>
+      <ui-training-button appearance="training-green" @click=${x=> x.insertOrder()}>Add Order<//ui-training-button>
+    </ui-training-design-system-provider>
   </div>
   <div>
     <zero-text-field :value=${sync(x=> x.minimumQuantity)}>Minimum Quantity Displayed</zero-text-field>

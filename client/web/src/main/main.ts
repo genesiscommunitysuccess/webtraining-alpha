@@ -48,14 +48,14 @@ export class MainApplication extends FASTElement {
   onDarkModeToggle() {
     baseLayerLuminance.setValueFor(
       this.provider,
-      baseLayerLuminance.getValueFor(this.provider) === StandardLuminance.DarkMode
-        ? StandardLuminance.LightMode
-        : StandardLuminance.DarkMode
+      baseLayerLuminance.getValueFor(this.provider) === StandardLuminance.DarkMode ?
+        StandardLuminance.LightMode :
+        StandardLuminance.DarkMode,
     );
   }
 
   async loadRemotes() {
-    await Components.loadRemotes();
+    await Components.loadZeroAsync();
     /**
      * Simulate loading delay
      * await new Promise(resolve => setTimeout(resolve, 3000));
@@ -96,7 +96,7 @@ export class MainApplication extends FASTElement {
           ...defaultConnectConfig.connect,
           heartbeatInterval: 15_000,
         },
-      })
+      }),
     );
   }
 }

@@ -2,11 +2,11 @@ import {html, repeat, when, ref} from '@microsoft/fast-element';
 import type {Home} from './home';
 
 export const positionsColumnDefs: any[] = [
-    {field: 'INSTRUMENT_ID', headerName: 'Instrument'},
-    {field: 'QUANTITY', headerName: 'Quantity'},
-    {field: 'NOTIONAL', headerName: 'Notional'},
-    {field: 'VALUE', headerName: 'Value'},
-    {field: 'PNL', headerName: 'Pnl'},
+  {field: 'INSTRUMENT_ID', headerName: 'Instrument'},
+  {field: 'QUANTITY', headerName: 'Quantity'},
+  {field: 'NOTIONAL', headerName: 'Notional'},
+  {field: 'VALUE', headerName: 'Value'},
+  {field: 'PNL', headerName: 'Pnl'},
 ];
 
 export const HomeTemplate = html<Home>`
@@ -23,7 +23,7 @@ export const HomeTemplate = html<Home>`
         ></entity-management>
     </div>
     <div>
-      <zero-anchor @click=${(x) => x.navigation.navigateTo("/playground")}>
+      <zero-anchor @click=${x => x.navigation.navigateTo('/playground')}>
         Playground
       </zero-anchor>
     </div>
