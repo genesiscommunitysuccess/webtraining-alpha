@@ -1,6 +1,6 @@
 import {html, repeat, when} from '@microsoft/fast-element';
 import type {Trade} from './trade';
-import { sync } from '@genesislcap/foundation-utils';
+import {sync} from '@genesislcap/foundation-utils';
 import {tradeColumnDefs} from './tradeColumnDefs';
 
 export const TradeTemplate = html<Trade>`

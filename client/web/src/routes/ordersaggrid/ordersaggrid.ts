@@ -14,7 +14,7 @@ export class OrdersAgGrid extends ZeroGridPro {
     super();
   }
 
-  public async connectedCallback() { 
+  public async connectedCallback() {
     super.connectedCallback();
   }
 }

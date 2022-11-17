@@ -22,8 +22,8 @@ export class Order extends FASTElement {
 
   @attr public minimumQuantity: number;
 
-  @observable public allInstruments: Array<{value: string, label: string}>; //add this property
-  @observable public sideOptions: Array<{value: string, label: string}>; //add this property
+  @observable public allInstruments: Array<{value: string, label: string}>; // add this property
+  @observable public sideOptions: Array<{value: string, label: string}>; // add this property
 
   @observable public serverResponse;
 
@@ -31,13 +31,13 @@ export class Order extends FASTElement {
     super();
   }
 
-  public async connectedCallback() { //add this method to Order class
-    super.connectedCallback(); //FASTElement implementation
+  public async connectedCallback() { // add this method to Order class
+    super.connectedCallback(); // FASTElement implementation
 
     this.minimumQuantity = 0;
 
-    const msg = await this.connect.snapshot('ALL_INSTRUMENTS'); //get a snapshot of data from ALL_INTRUMENTS data server
-    console.log(msg); //add this to look into the data returned and understand its structure
+    const msg = await this.connect.snapshot('ALL_INSTRUMENTS'); // get a snapshot of data from ALL_INTRUMENTS data server
+    console.log(msg); // add this to look into the data returned and understand its structure
     this.allInstruments = msg.ROW?.map(instrument => ({
       value: instrument.INSTRUMENT_ID, label: instrument.INSTRUMENT_NAME}));
 
@@ -50,7 +50,7 @@ export class Order extends FASTElement {
   public async insertOrder() {
     this.serverResponse = await this.connect.commitEvent('EVENT_ORDER_INSERT', {
       DETAILS: {
-        ORDER_ID: Date.now(), 
+        ORDER_ID: Date.now(),
         INSTRUMENT_ID: this.instrument,
         QUANTITY: this.quantity,
         PRICE: this.price,
@@ -64,7 +64,7 @@ export class Order extends FASTElement {
       const errorMsg = this.serverResponse.ERROR[0].TEXT;
       alert(errorMsg);
     } else {
-      alert("Order inserted successfully.")
+      alert('Order inserted successfully.');
     }
   }
 
@@ -77,7 +77,7 @@ export class Order extends FASTElement {
 
     this.lastPrice = msg.REPLY[0].LAST_PRICE;
   }
-  
+
   public singleOrderActionColDef = {
     headerName: 'Action',
     minWidth: 150,
@@ -109,14 +109,14 @@ export class Order extends FASTElement {
             SIDE: rowData.SIDE,
             NOTES: rowData.NOTES,
           },
-        })
+        });
         console.log(this.serverResponse);
 
         if (this.serverResponse.MESSAGE_TYPE == 'EVENT_NACK') {
           const errorMsg = this.serverResponse.ERROR[0].TEXT;
           alert(errorMsg);
         } else {
-          alert("Order canceled successfully.")
+          alert('Order canceled successfully.');
         }
       },
       actionName: 'Cancel Order',

@@ -1,8 +1,8 @@
 import {html, repeat, when} from '@microsoft/fast-element';
 import type {Order} from './order';
-import { sync } from '@genesislcap/foundation-utils';
+import {sync} from '@genesislcap/foundation-utils';
 import {orderColumnDefs} from './orderColumnDefs';
-import {OrderStyles} from "./order.styles";
+import {OrderStyles} from './order.styles';
 
 export const OrderTemplate = html<Order>`
 <zero-card>

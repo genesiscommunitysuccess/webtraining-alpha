@@ -7,11 +7,11 @@ import {Connect} from '@genesislcap/foundation-comms';
 import {Navigation} from '@genesislcap/foundation-header';
 import {inject} from '@microsoft/fast-foundation';
 
-EntityManagement; //imported from '@genesislcap/foundation-entity-management' to display Trade grid
+EntityManagement; // imported from '@genesislcap/foundation-entity-management' to display Trade grid
 
 const name = 'home-route';
 
-//describes the default config for the grid columns
+// describes the default config for the grid columns
 const defaultColumnConfig = {
   enableCellChangeFlash: true,
   enableRowGroup: true,
@@ -19,7 +19,7 @@ const defaultColumnConfig = {
   enableValue: true,
 };
 
-//grid columns that will be showed
+// grid columns that will be showed
 const COLUMNS = [
   {
     ...defaultColumnConfig,
