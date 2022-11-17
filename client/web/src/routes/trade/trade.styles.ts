@@ -1,12 +1,13 @@
 import {css} from '@microsoft/fast-element';
-import {mixinScreen} from '../../styles';
 
 export const TradeStyles = css`
-  :host {
-    ${mixinScreen('flex')}
+
+  zero-card div {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
     align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    --neutral-stroke-divider-rest: var(--neutral-fill-stealth-rest);
+    align-content: center;
+    gap: 0.5rem
   }
 `;
