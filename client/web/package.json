@@ -59,6 +59,8 @@
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
+    "@ag-grid-community/client-side-row-model": "^27.0.0",
+    "@ag-grid-community/csv-export": "^27.0.0",
     "@genesislcap/foundation-comms": "^5.0.0",
     "@genesislcap/foundation-entity-management": "^5.0.0",
     "@genesislcap/foundation-header": "^5.0.0",
@@ -66,7 +68,7 @@
     "@genesislcap/foundation-utils": "^5.0.0",
     "@genesislcap/foundation-zero": "^5.0.0",
     "@genesislcap/foundation-zero-grid-pro": "^5.0.0",
-    "@genesislcap/foundation-reporting": "1.0.1-alpha-7ea7de2.0",
+    "@genesislcap/foundation-reporting": "^5.0.0",
     "@genesislcap/grid-pro": "^5.0.0",
     "@microsoft/fast-components": "^2.21.6",
     "@microsoft/fast-element": "^1.7.0",
@@ -74,9 +76,6 @@
     "@microsoft/fast-router": "^0.4.2",
     "@microsoft/fast-web-utilities": "^5.1.0",
     "rxjs": "^7.5.4",
-    "tslib": "^2.3.1",
-    "@ag-grid-community/client-side-row-model": "^27.0.0",
-    "@ag-grid-community/csv-export": "^27.0.0"
-
+    "tslib": "^2.3.1"
   }
 }

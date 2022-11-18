@@ -1,26 +1,33 @@
 import {Connect} from '@genesislcap/foundation-comms';
-import {customElement, FASTElement, observable} from "@microsoft/fast-element";
-import {marketdataComponentCSS} from "./playground.styles";
-import {marketdataComponentTemplate} from "./playground.template";
+import {customElement, FASTElement, observable} from '@microsoft/fast-element';
+import {marketdataComponentCSS} from './playground.styles';
+import {marketDataComponent} from './playground.template';
 
-@customElement({name: "marketdata-component", template: marketdataComponentTemplate, styles: marketdataComponentCSS}) // custom element being created
+const msftPrice = 101.23;
+const aaplPrice = 227.12;
+
+@customElement({
+  name: 'marketdata-component',
+  template: marketDataComponent,
+  styles: marketdataComponentCSS
+})
 export class MarketdataComponent extends FASTElement {
     @Connect connect: Connect;
 
-    @observable instruments: String[] = ["MSFT", "AAPL"];
-    @observable lastPrices: number[] = [101.23, 227.12];
+    @observable instruments: String[] = ['MSFT', 'AAPL'];
+    @observable lastPrices: number[] = [msftPrice, aaplPrice];
 
-    @observable public allInstruments: Array<{id: any, name: any, price: any}> = []; //add this property
+    @observable public allInstruments: Array<{id: any, name: any, price: any}> = []; // add this property
 
-    public async connectedCallback() { //add this method to Order class
-      super.connectedCallback(); //FASTElement implementation
+    public async connectedCallback() { // add this method to Order class
+      super.connectedCallback(); // FASTElement implementation
 
       await this.setAllAllInstruments();
     }
 
     public getLastPriceRealTime(instrumentName: string) {
-        let instrumentIndex = this.instruments.indexOf(instrumentName);
-        return this.lastPrices[instrumentIndex];
+      const instrumentIndex = this.instruments.indexOf(instrumentName);
+      return this.lastPrices[instrumentIndex];
     }
 
     public async getMarketDataLastPrice(instrumentId: string) {
@@ -29,16 +36,16 @@ export class MarketdataComponent extends FASTElement {
           INSTRUMENT_ID: instrumentId,
         }});
       console.log(msg);
-  
-      return msg.REPLY[0] ? msg.REPLY[0].LAST_PRICE : "N/A";
+
+      return msg.REPLY[0] ? msg.REPLY[0].LAST_PRICE : 'N/A';
     }
 
     private async setAllAllInstruments() {
-      const msg = await this.connect.snapshot('ALL_INSTRUMENTS'); //get a snapshot of data from ALL_INTRUMENTS data server
-      msg.ROW.forEach(instrument => {
-          this.getMarketDataLastPrice(instrument.INSTRUMENT_ID).then( price => {
-            this.allInstruments.push({id: instrument.INSTRUMENT_ID, name: instrument.INSTRUMENT_NAME, price: price});
-          });
+      const msg = await this.connect.snapshot('ALL_INSTRUMENTS'); // get a snapshot of data from ALL_INTRUMENTS data server
+      msg.ROW.forEach((instrument) => {
+        this.getMarketDataLastPrice(instrument.INSTRUMENT_ID).then( (price) => {
+          this.allInstruments.push({id: instrument.INSTRUMENT_ID, name: instrument.INSTRUMENT_NAME, price: price});
+        });
       });
     }
 }
