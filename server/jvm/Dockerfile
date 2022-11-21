@@ -26,6 +26,7 @@ COPY ./build/dependencies/genesisproduct*.zip .
 COPY ./build/dependencies/genesis-distribution*.zip .
 COPY ./build/dependencies/alpha-site-specific*.zip .
 COPY ./build/dependencies/auth-distribution-*.zip .
+COPY ./build/dependencies/reporting-distribution*.zip .
 
 RUN unzip \*.zip
 RUN rm *.zip

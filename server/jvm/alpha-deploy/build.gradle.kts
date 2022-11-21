@@ -25,6 +25,13 @@ dependencies {
     api(project(":alpha-messages"))
     api(project(":alpha-site-specific", "distribution"))
     // Add additional dependencies on other external distributions here
+    implementation(
+        group = "global.genesis",
+        name = "reporting-distribution",
+        version = "6.3.0",
+        classifier = "bin",
+        ext = "zip"
+    )
 }
 
 task("copyDistributions", Copy::class) {
