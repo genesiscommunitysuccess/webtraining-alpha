@@ -25,8 +25,6 @@ export const OrderTemplate = html<Order>`
       <ui-training-text-field required :value=${sync(x=> x.quantity)}>Quantity</ui-training-text-field>
       <ui-training-text-field :value=${sync(x=> x.price)}>Price</ui-training-text-field>
     </ui-training-design-system-provider>
-  </div>
-  <div>
     <span>Total: ${x => x.quantity * x.price}</span>
     <span>Direction</span>
     <zero-select :value=${sync(x=> x.direction)}>
@@ -34,8 +32,6 @@ export const OrderTemplate = html<Order>`
         <zero-option value=${x => x.value}>${x => x.label}</zero-option>
       `)}
     </zero-select>
-  </div>
-  <div>
     <zero-text-area :value=${sync(x=> x.notes)}>Notes</zero-text-area>
   </div>
   <div>
