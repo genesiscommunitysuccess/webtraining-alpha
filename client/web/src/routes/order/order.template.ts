@@ -7,7 +7,7 @@ import {OrderStyles} from './order.styles';
 export const OrderTemplate = html<Order>`
 <zero-card>
   <div>
-    <span>Instrument</span>
+    <span class='${x => x.instrumentClass}'>Instrument</span>
     <zero-select :value=${sync(x=> x.instrument)} @change=${x => x.getMarketData()}>
       <zero-option :selected=${sync(x => x.instrument==undefined)}>-- Select --</zero-option>
       ${repeat(x => x.allInstruments, html`
@@ -22,8 +22,8 @@ export const OrderTemplate = html<Order>`
     <zero-text-field :value=${sync(x=> x.price)}>Price</zero-text-field>
     -->
     <ui-training-design-system-provider>
-      <ui-training-text-field required :value=${sync(x=> x.quantity)}>Quantity</ui-training-text-field>
-      <ui-training-text-field :value=${sync(x=> x.price)}>Price</ui-training-text-field>
+      <ui-training-text-field required :value=${sync(x=> x.quantity)}><span class='${x => x.quantityClass}'>Quantity</span></ui-training-text-field>
+      <ui-training-text-field :value=${sync(x=> x.price)}><span class='${x => x.priceClass}'>Price</span></ui-training-text-field>
     </ui-training-design-system-provider>
   </div>
   <div>

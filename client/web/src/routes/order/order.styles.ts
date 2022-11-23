@@ -9,4 +9,8 @@ export const OrderStyles = css`
   .quantity-nok {
     color: red;
   }
+
+  .required-yes {
+    color: red;
+  }
 `;

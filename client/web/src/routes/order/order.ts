@@ -20,6 +20,10 @@ export class Order extends FASTElement {
   @observable public direction: string;
   @observable public notes: string;
 
+  @observable public instrumentClass: string;
+  @observable public quantityClass: string;
+  @observable public priceClass: string;
+
   @attr public minimumQuantity: number;
 
   @observable public allInstruments: Array<{value: string, label: string}>; // add this property
@@ -48,6 +52,10 @@ export class Order extends FASTElement {
   }
 
   public async insertOrder() {
+    this.instrumentClass = "";
+    this.quantityClass = "";
+    this.priceClass = "";
+
     this.serverResponse = await this.connect.commitEvent('EVENT_ORDER_INSERT', {
       DETAILS: {
         ORDER_ID: Date.now(),
@@ -58,11 +66,28 @@ export class Order extends FASTElement {
         NOTES: this.notes,
       },
     });
-    console.log(this.serverResponse);
+    console.log("serverResponse: ", this.serverResponse);
 
     if (this.serverResponse.MESSAGE_TYPE == 'EVENT_NACK') {
-      const errorMsg = this.serverResponse.ERROR[0].TEXT;
-      alert(errorMsg);
+      const error = this.serverResponse.ERROR[0];
+      alert(error.TEXT);
+      switch (error.FIELD) {
+        case "INSTRUMENT_ID":
+          this.instrumentClass = 'required-yes';
+          break;
+      
+        case "QUANTITY":
+          this.quantityClass = 'required-yes';
+          break;
+
+        case "PRICE":
+          this.priceClass = 'required-yes';
+          break;
+          
+        default:
+          console.log("FIELD not found: ", error.FIELD);
+      }
+      
     } else {
       alert('Order inserted successfully.');
     }
