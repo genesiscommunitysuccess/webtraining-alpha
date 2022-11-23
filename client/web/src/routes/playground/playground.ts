@@ -1,5 +1,6 @@
-import {FASTElement, customElement, observable, css} from '@microsoft/fast-element';
 import {Connect} from '@genesislcap/foundation-comms';
+import {customElement, FASTElement, observable} from '@microsoft/fast-element';
+import {marketdataComponentCSS} from './playground.styles';
 import {marketDataComponent} from './playground.template';
 
 const msftPrice = 101.23;
@@ -8,17 +9,7 @@ const aaplPrice = 227.12;
 @customElement({
   name: 'marketdata-component',
   template: marketDataComponent,
-  styles: css`
-    h4 {
-      color: #00ffff;
-    }
-    .instrument-name {
-      color: #00ffff;
-    }
-    .instrument-price {
-      color: #00ff6a;
-    }
-  `,
+  styles: marketdataComponentCSS
 })
 export class MarketdataComponent extends FASTElement {
     @Connect connect: Connect;
