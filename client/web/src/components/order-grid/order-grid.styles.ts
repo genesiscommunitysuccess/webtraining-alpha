@@ -1,7 +1,7 @@
 
 import {zeroGridProStyles} from '@genesislcap/foundation-zero-grid-pro';
 import {css, ElementStyles} from '@microsoft/fast-element';
-import {BUY_SIDE, SELL_SIDE} from './colors';
+import {BUY_DIRECTION, SELL_DIRECTION} from './colors';
 
 export const positionsGridStyles: ElementStyles = css`
   ${zeroGridProStyles}
@@ -21,18 +21,18 @@ export const positionsGridStyles: ElementStyles = css`
   }
 
   .buy-direction-order.status-cell::after {
-    background-color: ${BUY_SIDE};
+    background-color: ${BUY_DIRECTION};
   }
 
   .buy-direction-order {
-    color: ${BUY_SIDE};
+    color: ${BUY_DIRECTION};
   }
 
   .sell-direction-order.status-cell::after {
-    background-color: ${SELL_SIDE};
+    background-color: ${SELL_DIRECTION};
   }
 
   .sell-direction-order {
-    color: ${SELL_SIDE};
+    color: ${SELL_DIRECTION};
   }
 `;

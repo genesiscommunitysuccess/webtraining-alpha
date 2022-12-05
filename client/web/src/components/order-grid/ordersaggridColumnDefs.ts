@@ -12,6 +12,6 @@ export const ordersaggridColumnDefs: ColDef[] = [
   {field: 'QUANTITY', headerName: 'Quantity', valueFormatter: formatNumber(0), type: 'rightAligned', flex: 1, enableCellChangeFlash: true},
   {field: 'ORDER_ID', headerName: 'Order ID', flex: 1, enableCellChangeFlash: true},
   {field: 'PRICE', headerName: 'Price', valueFormatter: formatNumber(2), type: 'rightAligned', flex: 1, enableCellChangeFlash: true},
-  {field: 'DIRECTION', headerName: 'Order Side', sort: 'desc', flex: 2},
+  {field: 'DIRECTION', headerName: 'Order Direction', sort: 'desc', flex: 2},
   {field: 'NOTES', headerName: 'Notes', sort: 'desc', flex: 2},
 ];

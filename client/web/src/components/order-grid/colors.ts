@@ -1,3 +1,3 @@
-export const BUY_SIDE = '#00ff00';
+export const BUY_DIRECTION = '#00ff00';
 
-export const SELL_SIDE = '#ff0000';
+export const SELL_DIRECTION = '#ff0000';
