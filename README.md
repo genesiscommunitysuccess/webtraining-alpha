@@ -1,6 +1,6 @@
 # webtraining-alpha
 
-Answer-key of the Web Developer Training. From the [webtraining-seed]https://github.com/genesiscommunitysuccess/webtraining-seed), this is the complete application built during the [web developer training](https://docs.genesis.global/secure/getting-started/web-training/training-intro/) and can be used as a reference for it.
+Answer-key of the Web Developer Training. From the [webtraining-seed](https://github.com/genesiscommunitysuccess/webtraining-seed), this is the complete application built during the [web developer training](https://docs.genesis.global/secure/getting-started/web-training/training-intro/) and can be used as a reference for it.
 
 # Building, Running and Testing
 From the command line, cd into the root directory of the project and then follow these steps.
