@@ -29,4 +29,5 @@ dataServer {
     query("ALL_INSTRUMENTS", INSTRUMENT)
     query("ALL_POSITIONS", POSITION)
     query("ALL_ORDERS", ORDER)
+
 }
