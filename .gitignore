@@ -12,6 +12,8 @@ pids
 
 # Output of 'npm pack'
 *.tgz
+bin/
+client/bootstrapDone
 
 # dotenv environment variables file
 .env
@@ -37,8 +39,6 @@ target/
 .gradle
 **/build/
 !src/**/build/
-bin/
-client/bootstrapDone
 
 # Ignore Gradle GUI config
 gradle-app.setting
