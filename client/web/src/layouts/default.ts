@@ -49,28 +49,24 @@ export const defaultLayout = new FASTElementLayout(
   )}
         <div slot="menu-contents">
           <!-- Example markup -->
-          <p>GROUP SLOT</p>
+          <p>Orders and Trades</p>
           <zero-tree-view>
-              <zero-tree-item>
-                  <zero-icon variant="solid" name="location-arrow"></zero-icon>
-                  Slot Tree Item
-              </zero-tree-item>
-              <zero-tree-item>
-                  <zero-icon variant="solid" name="location-arrow"></zero-icon>
-                  Slot Tree Item
-              </zero-tree-item>
+
+            ${repeat(
+              x => x.config.allRoutes,
+              html`
+                      <zero-tree-item
+                        variant="solid"
+                        name="location-arrow"
+                        @click=${(x, c) => c.parent.navigation.navigateTo(x.path)}
+                      >
+                      ${x => x.title}
+                      </zero-tree-item>
+                    `,
+            )}
           </zero-tree-view>
-          <p>GROUP SLOT 2</p>
-          <zero-tree-view>
-              <zero-tree-item>
-                  <zero-icon variant="solid" name="location-arrow"></zero-icon>
-                  Slot Tree Item 2
-              </zero-tree-item>
-              <zero-tree-item>
-                  <zero-icon variant="solid" name="location-arrow"></zero-icon>
-                  Slot Tree Item 2
-              </zero-tree-item>
-          </zero-tree-view>        
+
+               
         </div>
       </foundation-header>
       <div class="content">

@@ -94,6 +94,7 @@ export class Order extends FASTElement {
   }
 
   public async getMarketData() {
+    this.lastPrice = null;
     const msg = await this.connect.request('INSTRUMENT_MARKET_DATA', {
       REQUEST: {
         INSTRUMENT_ID: this.instrument,

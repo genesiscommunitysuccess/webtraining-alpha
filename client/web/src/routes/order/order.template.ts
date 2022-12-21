@@ -14,7 +14,7 @@ export const OrderTemplate = html<Order>`
         <zero-option value=${x => x.value}>${x => x.label}</zero-option>
       `)}
     </zero-select>
-    <span>Last price: ${x => x.lastPrice}</span>
+    <span>Last price is ${x => x.lastPrice ? x.lastPrice : 'N/A'}</span>
   </div>
   <div>
     <!-- 
@@ -25,13 +25,19 @@ export const OrderTemplate = html<Order>`
       <ui-training-text-field required :value=${sync(x=> x.quantity)}><span class='${x => x.quantityClass}'>Quantity</span></ui-training-text-field>
       <ui-training-text-field :value=${sync(x=> x.price)}><span class='${x => x.priceClass}'>Price</span></ui-training-text-field>
     </ui-training-design-system-provider>
+  </div>
+  <div>
     <span>Total: ${x => x.quantity * x.price}</span>
+  </div>
+  <div>
     <span>Direction</span>
     <zero-select :value=${sync(x=> x.direction)}>
       ${repeat(x => x.directionOptions, html`
         <zero-option value=${x => x.value}>${x => x.label}</zero-option>
       `)}
     </zero-select>
+    </div>
+  <div>
     <zero-text-area :value=${sync(x=> x.notes)}>Notes</zero-text-area>
   </div>
   <div>
