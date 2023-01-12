@@ -48,4 +48,13 @@ export class MarketdataComponent extends FASTElement {
         });
       });
     }
+
+    public async callExternalAPI() {
+      let url = 'https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits';
+      let response = await fetch(url);
+
+      let commits = await response.json();
+      console.log(commits[0]);
+      window.alert("Author of the first commit is " + commits[0].author.login);
+    }
 }
