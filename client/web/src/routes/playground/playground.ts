@@ -1,5 +1,6 @@
 import {Connect} from '@genesislcap/foundation-comms';
-import {customElement, FASTElement, observable} from '@microsoft/fast-element';
+import { ZeroGridPro } from '@genesislcap/foundation-zero-grid-pro';
+import {css, customElement, FASTElement, observable} from '@microsoft/fast-element';
 import {marketdataComponentCSS} from './playground.styles';
 import {marketDataComponent} from './playground.template';
 
@@ -18,6 +19,8 @@ export class MarketdataComponent extends FASTElement {
     @observable lastPrices: number[] = [msftPrice, aaplPrice];
 
     @observable public allInstruments: Array<{id: any, name: any, price: any}> = []; // add this property
+
+    public jsonGrid!: ZeroGridPro;
 
     public async connectedCallback() { // add this method to Order class
       super.connectedCallback(); // FASTElement implementation
@@ -56,5 +59,33 @@ export class MarketdataComponent extends FASTElement {
       let commits = await response.json();
       console.log(commits[0]);
       window.alert("Author of the first commit is " + commits[0].author.login);
+    }
+
+    public async loadGridData() {
+      let url = 'https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits';
+      let response = await fetch(url);
+      let commits = await response.json();
+      
+      const rowData = [];
+      commits.forEach(c => rowData.push({login:c.author.login, 
+        id:c.author.id, 
+        type:c.author.type}));
+
+      const columnDefs = [
+        {field: 'login'},
+        {field: 'id'},
+        {field: 'type'},
+      ];
+
+      const gridOptions = {
+        defaultColDef: {
+          resizable: true,
+          filter: true,
+        },
+        columnDefs,
+        rowData,
+      };
+
+      this.jsonGrid.gridOptions = gridOptions;
     }
 }

@@ -1,5 +1,6 @@
-import {html, repeat} from '@microsoft/fast-element';
+import {html, ref, repeat} from '@microsoft/fast-element';
 import type {MarketdataComponent} from './playground';
+import { zeroGridProTemplate } from '@genesislcap/foundation-zero-grid-pro';
 
 export const marketDataComponent = html<MarketdataComponent>`
   <div class="header">
@@ -24,6 +25,17 @@ export const marketDataComponent = html<MarketdataComponent>`
 
     <zero-button @click=${x=> x.callExternalAPI()}>Call external API</zero-button>
 
+    <zero-button @click=${x=> x.loadGridData()}>Load grid data from external API</zero-button>
+
+    <div class="top-layout">
+        <zero-card class="positions-card">
+            <span class="card-title">Data from API</span>
+            <zero-grid-pro ${ref('jsonGrid')} rowHeight="45" style="height:300px;display:block">
+                
+            </zero-grid-pro>
+        </zero-card>
+    </div>
+    
     <!--
     <ui-training-design-system-provider>
       <ui-training-button appearance="training-green">UI Training Design System Button</ui-training-button>
