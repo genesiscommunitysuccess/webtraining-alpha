@@ -25,7 +25,6 @@ import {alphaFilter} from './filter';
 import {alphaFilterBar} from './filter-bar';
 import {alphaFlipper} from './flipper';
 import {alphaFlyout} from './flyout';
-import {alphaForm} from './form';
 import {alphaHorizontalScroll} from './horizontal-scroll';
 import {alphaIcon} from './icon';
 import {alphaListbox} from './listbox';
@@ -90,7 +89,6 @@ export const baseComponents = {
   alphaFilterBar,
   alphaFlipper,
   alphaFlyout,
-  alphaForm,
   alphaHorizontalScroll,
   alphaIcon,
   alphaListbox,

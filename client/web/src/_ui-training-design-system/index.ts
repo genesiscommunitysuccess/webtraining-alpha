@@ -29,7 +29,6 @@ export * from './filter';
 export * from './filter-bar';
 export * from './flipper';
 export * from './flyout';
-export * from './form';
 export * from './horizontal-scroll';
 export * from './icon';
 export * from './listbox';

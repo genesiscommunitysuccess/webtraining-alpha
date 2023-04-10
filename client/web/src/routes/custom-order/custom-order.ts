@@ -12,8 +12,8 @@ OrdersAgGrid;
     <zero-card>
       <order-grid>
         <grid-pro-genesis-datasource
-            resourceName="ALL_ORDERS"
-            orderBy="ORDER_ID">
+          resource-name="ALL_ORDERS"
+          orderBy="ORDER_ID">
         </grid-pro-genesis-datasource>
         ${repeat(() => ordersaggridColumnDefs, html`
           <grid-pro-column :definition="${x => x}"></grid-pro-column>

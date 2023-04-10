@@ -5,7 +5,7 @@ import {
   FoundationAnalyticsEventType,
   Session,
 } from '@genesislcap/foundation-comms';
-import {Login, Settings as LoginSettings} from '@genesislcap/foundation-login';
+import {Settings as LoginSettings} from '@genesislcap/foundation-login';
 import {Constructable} from '@microsoft/fast-element';
 import {Container} from '@microsoft/fast-foundation';
 import {Route, RouterConfiguration} from '@microsoft/fast-router';
@@ -19,12 +19,16 @@ import {UserComponent} from './user/user';
 import {Reporting} from '@genesislcap/foundation-reporting';
 import { CustomOrderPage } from './custom-order/custom-order';
 
-export class MainRouterConfig extends RouterConfiguration<LoginSettings> {
+type RouterSettings = {
+  autoAuth?: boolean;
+} & LoginSettings;
+
+export class MainRouterConfig extends RouterConfiguration<RouterSettings> {
   constructor(
     @Auth private auth: Auth,
     @Container private container: Container,
     @FoundationAnalytics private analytics: FoundationAnalytics,
-    @Session private session: Session,
+    @Session private session: Session
   ) {
     super();
   }
@@ -43,12 +47,35 @@ export class MainRouterConfig extends RouterConfiguration<LoginSettings> {
     this.title = 'Blank App Demo';
     this.defaultLayout = defaultLayout;
 
-    const commonSettings: LoginSettings = {allowAutoAuth: true};
+    const authPath = 'login';
+    const commonSettings: RouterSettings = { autoAuth: true };
 
     this.routes.map(
-      {path: '', redirect: 'login'},
-      {path: 'login', element: Login, title: 'Login', name: 'login', settings: {public: true, defaultRedirectUrl: 'home', autoConnect: true}, layout: loginLayout},
-      {path: 'home', element: Home, title: 'Home', name: 'home', settings: commonSettings},
+      { path: '', redirect: authPath },
+      {
+        path: authPath,
+        name: 'login',
+        title: 'Login',
+        element: async () => {
+          const { configure, define } = await import(
+            /* webpackChunkName: "foundation-login" */
+            '@genesislcap/foundation-login'
+          );
+          configure(this.container, {
+            autoConnect: true,
+            defaultRedirectUrl: 'home',
+          });
+          return define({
+            name: `blank-app-login`,
+            /**
+             * You can augment the template and styles here when needed.
+             */
+          });
+        },
+        layout: loginLayout,
+        settings: { public: true },
+        childRouters: true,
+      },      {path: 'home', element: Home, title: 'Home', name: 'home', settings: commonSettings},
       {path: 'not-found', element: NotFound, title: 'Not Found', name: 'not-found'},
       {path: 'playground', element: MarketdataComponent, title: 'Playground', name: 'playground', settings: commonSettings},
       {path: 'order', element: Order, title: 'Order', name: 'order', settings: commonSettings},
@@ -63,8 +90,9 @@ export class MainRouterConfig extends RouterConfiguration<LoginSettings> {
     /**
      * Example of a FallbackRouteDefinition
      */
-    this.routes.fallback(() => (this.auth.isLoggedIn ? {redirect: 'not-found'} : {redirect: 'login'}));
-
+    this.routes.fallback(() =>
+      this.auth.isLoggedIn ? { redirect: 'not-found' } : { redirect: authPath }
+    );
     /**
      * Example of a NavigationContributor
      */
@@ -72,7 +100,9 @@ export class MainRouterConfig extends RouterConfiguration<LoginSettings> {
       navigate: async (phase) => {
         const settings = phase.route.settings;
 
-        this.analytics.trackEvent(FoundationAnalyticsEventType.routeChanged, <FoundationAnalyticsEvent.RouteChanged>{
+        this.analytics.trackEvent(FoundationAnalyticsEventType.routeChanged, <
+          FoundationAnalyticsEvent.RouteChanged
+        >{
           path: phase.route.endpoint.path,
         });
 
@@ -93,7 +123,7 @@ export class MainRouterConfig extends RouterConfiguration<LoginSettings> {
         /**
          * If allowAutoAuth and session is valid try to connect+auto-login
          */
-        if (settings && settings.allowAutoAuth && await auth.reAuthFromSession()) {
+        if (settings && settings.autoAuth && await auth.reAuthFromSession()) {
           return;
         }
 

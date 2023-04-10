@@ -32,7 +32,7 @@ export const HomeTemplate = html<Home>`
             <span class="card-title">Positions</span>
             <zero-grid-pro ${ref('positionsGrid')} rowHeight="45" only-template-col-defs>
                 ${when(x => x.connection.isConnected, html`
-                  <grid-pro-genesis-datasource resourceName="ALL_POSITIONS"></grid-pro-genesis-datasource>
+                  <grid-pro-genesis-datasource resource-name="ALL_POSITIONS"></grid-pro-genesis-datasource>
                   ${repeat(() => positionsColumnDefs, html`
                     <grid-pro-column :definition="${x => x}" />
                   `)}
