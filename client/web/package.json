@@ -1,11 +1,11 @@
 {
   "name": "@genesislcap/alpha-web-client",
-  "description": "Blank App Web Client",
+  "description": "WebDeveloper Training Client",
   "version": "0.0.1",
   "private": true,
   "license": "Apache-2.0",
   "config": {
-    "API_HOST": "wss://public-foundation.genesislab.global/gwf/",
+    "API_HOST": "ws://localhost:9064",
     "DEFAULT_USER": "JaneDee",
     "DEFAULT_PASSWORD": "beONneON*74",
     "PORT": 6060
@@ -55,7 +55,7 @@
     "watchlist": "^0.3.1",
     "webpack": "^5.45.1",
     "webpack-cli": "^4.5.0",
-    "webpack-dev-server": "^4.0.0-beta.3",
+    "webpack-dev-server": "^4.13.1",
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {

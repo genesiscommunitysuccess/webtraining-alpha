@@ -8,7 +8,6 @@ dependencies {
     implementation(project(":alpha-dictionary-cache:alpha-generated-view"))
 
     implementation("global.genesis:auth-config:${properties["authVersion"]}")
-    implementation("global.genesis:reporting-config:${properties["reportingVersion"]}")
 }
 
 description = "alpha-dictionary-cache"
