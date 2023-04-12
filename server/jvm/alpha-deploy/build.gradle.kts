@@ -46,4 +46,11 @@ dependencies {
     /* --- */
 
     /* Add additional dependencies on other external distributions here */
+    implementation(
+        group = "global.genesis",
+        name = "reporting-distribution",
+        version = properties["reportingVersion"].toString(),
+        classifier = "bin",
+        ext = "zip"
+    )
 }
