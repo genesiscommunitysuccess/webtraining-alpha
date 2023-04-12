@@ -1,11 +1,14 @@
-import {fastMenuItem} from '@microsoft/fast-components';
-import {getExports} from '../utils';
+import { foundationMenuItem } from '@genesislcap/foundation-ui';
+import { getExports } from '../utils';
 
-const {defaultConfig, shadowOptions, styles, template} = getExports(fastMenuItem);
+// eslint-disable-next-line prettier/prettier
+const { defaultConfig, shadowOptions, styles, template } = getExports(
+  foundationMenuItem
+);
 
-export const alphaMenuItem = () => fastMenuItem();
+export const alphaMenuItem = () => foundationMenuItem();
 
-export {MenuItem} from '@microsoft/fast-components';
+export { MenuItem } from '@genesislcap/foundation-ui';
 
 export const defaultMenuItemConfig = defaultConfig;
 export const alphaMenuItemTemplate = template;
