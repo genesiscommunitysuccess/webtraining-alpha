@@ -51,7 +51,7 @@ export const TradeTemplate = html<Trade>`
   </div>
   <zero-grid-pro rowHeight="20" persist-column-state-key='trade-grid-settings'>
       <grid-pro-genesis-datasource
-          resourceName="ALL_TRADES"
+          resource-name="ALL_TRADES"
           orderBy="TRADE_ID">
       </grid-pro-genesis-datasource>
       ${repeat(() => tradeColumnDefs, html`

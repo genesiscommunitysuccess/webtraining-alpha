@@ -49,7 +49,7 @@ dependencies {
     implementation(
         group = "global.genesis",
         name = "reporting-distribution",
-        version = "6.3.0",
+        version = properties["reportingVersion"].toString(),
         classifier = "bin",
         ext = "zip"
     )
