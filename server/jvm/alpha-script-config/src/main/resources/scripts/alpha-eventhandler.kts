@@ -24,6 +24,7 @@ eventHandler {
     val stateMachine = inject<TradeStateMachine>()
 
     eventHandler<Trade>(name = "TRADE_INSERT") {
+        schemaValidation =  false
         permissionCodes = listOf("INSERT_TRADE")
         onValidate { event ->
             val message = event.details
@@ -146,6 +147,7 @@ eventHandler {
     }
 
     eventHandler<Order>(name = "ORDER_INSERT", transactional = true) {
+        schemaValidation =  false
         onCommit { event ->
             entityDb.insert(event.details)
             ack()
