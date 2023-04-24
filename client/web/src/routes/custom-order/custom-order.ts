@@ -13,7 +13,7 @@ OrdersAgGrid;
       <order-grid>
         <grid-pro-genesis-datasource
           resource-name="ALL_ORDERS"
-          orderBy="ORDER_ID">
+          order-by="ORDER_ID">
         </grid-pro-genesis-datasource>
         ${repeat(() => ordersaggridColumnDefs, html`
           <grid-pro-column :definition="${x => x}"></grid-pro-column>

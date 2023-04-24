@@ -53,7 +53,7 @@ export const OrderTemplate = html<Order>`
       <slotted-styles :styles=${() => OrderStyles}></slotted-styles>
       <grid-pro-genesis-datasource
       resource-name="ALL_ORDERS"
-          orderBy="ORDER_ID"
+          order-by="ORDER_ID"
           criteria="QUANTITY >= ${x=>x.minimumQuantity}">
       </grid-pro-genesis-datasource>
       ${repeat(() => orderColumnDefs, html`
