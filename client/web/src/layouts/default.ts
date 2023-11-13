@@ -32,7 +32,6 @@ export const loginLayout = new FASTElementLayout(
 export const defaultLayout = new FASTElementLayout(
   html`
     <div class="container">
-      <alpha-button>Alpha</alpha-button>
       <foundation-header
         show-luminance-toggle-button
         show-misc-toggle-button
