@@ -1,4 +1,5 @@
 package global.genesis
+
 import global.genesis.db.util.AbstractDatabaseTest
 import global.genesis.db.util.TestUtil
 import global.genesis.dictionary.GenesisDictionary
@@ -10,17 +11,18 @@ import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
-import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.Assertions.*;
 import javax.inject.Inject
 
-class TradeViewTest : AbstractDatabaseTest() {
+class AlphaTradeViewTest : AbstractDatabaseTest() {
     @Inject
     lateinit var enhancedTradeViewRepository: TradeViewAsyncRepository
+
     override fun createMockDictionary(): GenesisDictionary = prodDictionary()
 
-    @Before
+    @BeforeEach
     fun setup() {
         TestUtil.loadData(resolvePath("data/TEST_DATA.csv"), rxDb)
     }
@@ -40,10 +42,10 @@ class TradeViewTest : AbstractDatabaseTest() {
         val now = DateTime.now()
         val trade = buildTrade("1L", now)
         rxEntityDb.insert(trade).blockingGet()
-        val tradeView = enhancedTradeViewRepository.get(TradeView.ById("1"))
+        val tradeView = enhancedTradeViewRepository.get(TradeView.ById("1L"))
         if (tradeView != null) {
             assertEquals("Testing AG", tradeView.counterpartyName)
-            assertEquals("FOO.L", tradeView.instrumentName)
+            assertEquals("BAR.L", tradeView.instrumentName)
             assertEquals(now, tradeView.tradeDate)
             assertEquals(12.0, tradeView.price, 0.0)
             assertEquals((100).toInt(), tradeView.quantity)

@@ -26,14 +26,12 @@ distributions {
                 include("alpha-*.jar")
             }
             into("alpha/lib") {
-                from("${project.rootProject.buildDir}/dependencies")
+                from(project.rootProject.layout.buildDirectory.dir("dependencies"))
                 duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
                 exclude("genesis-*.jar")
                 exclude("alpha-*.jar")
-                exclude("genesis-*.zip")
-                exclude("genesisproduct-*.zip")
-                exclude("auth-*.zip")
+                exclude("*.zip")
 
                 fileMode = libPermissions
             }
@@ -67,6 +65,9 @@ val distribution by configurations.creating {
 
 // To give custom name to the distribution package
 tasks {
+    distTar {
+        mustRunAfter(":alpha-deploy:copyDependencies")
+    }    
     distZip {
         archiveBaseName.set("genesisproduct-alpha")
         archiveClassifier.set("bin")
