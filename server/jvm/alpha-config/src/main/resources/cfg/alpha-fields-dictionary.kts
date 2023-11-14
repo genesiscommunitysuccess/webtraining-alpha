@@ -39,7 +39,11 @@ fields {
     field("VALUE", type = DOUBLE)
     field("PNL", type = DOUBLE)
 
+    field("STOCK_ID", type = STRING)
+    field("COMPANY_NAME", type = STRING)
+    field("TRADING_VOLUME", type = DOUBLE)
+    field("CEO", type = STRING)
+
     field("NOTES", type = STRING)
     field("ORDER_ID", type = STRING)
 }
-

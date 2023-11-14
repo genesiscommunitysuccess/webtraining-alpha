@@ -1,17 +1,16 @@
-import {
-  defaultTextFieldConfig,
-  foundationTextFieldShadowOptions,
-  TextField as FoundationTextField,
-} from '@genesislcap/foundation-ui';
-import {alphaTextFieldTemplate as template} from './text-field.template';
-import {alphaTextFieldStyles as styles} from './text-field.styles';
+import { foundationTextField } from '@genesislcap/foundation-ui';
+import { getExports } from '../utils';
 
-export class TextField extends FoundationTextField {}
+// eslint-disable-next-line prettier/prettier
+const { defaultConfig, shadowOptions, styles, template } = getExports(
+  foundationTextField
+);
 
-export const alphaTextField = TextField.compose({
-  baseName: 'text-field',
-  template,
-  styles,
-  shadowOptions: foundationTextFieldShadowOptions,
-  ...defaultTextFieldConfig,
-});
+export const alphaTextField = () => foundationTextField();
+
+export { TextField } from '@genesislcap/foundation-ui';
+
+export const defaultTextFieldConfig = defaultConfig;
+export const alphaTextFieldTemplate = template;
+export const alphaTextFieldStyles = styles;
+export const alphaTextFieldShadowOptions = shadowOptions;

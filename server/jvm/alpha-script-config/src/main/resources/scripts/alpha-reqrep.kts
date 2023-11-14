@@ -1,3 +1,5 @@
+import global.genesis.requestreply.pal.script.requestReply
+
 /**
  * System              : Genesis Business Library
  * Sub-System          : multi-pro-code-test Configuration
@@ -8,6 +10,7 @@
  *
  * Modification History
  */
+
 requestReplies {
     requestReply("INSTRUMENT_MARKET_DATA", INSTRUMENT_PRICE) {
 
@@ -24,4 +27,6 @@ requestReplies {
             row.instrumentId.equals(parameters.getString("INSTRUMENT_ID"))
         }
     }
+    requestReply("ALL_REQ_INSTRUMENTS", INSTRUMENT)
+    requestReply("ALL_REQ_TRADES", TRADE)
 }

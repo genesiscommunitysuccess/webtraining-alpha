@@ -1,16 +1,17 @@
 import {css} from '@microsoft/fast-element';
 
-export const playgroundStyles = css`
+export const userRegistrationStyles = css`
 
-    #FormsModal {
+    #newUserForm {
         display: flex;
         flex-direction: column;
         width: 300px;
     }
 
-    .ScrollOn {
+    zero-modal {
         overflow-y: scroll;
         overflow-x: hidden;
     }
+
 
 `;

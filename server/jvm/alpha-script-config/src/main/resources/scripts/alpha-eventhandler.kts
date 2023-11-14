@@ -131,6 +131,49 @@ eventHandler {
             ack()
         }
     }
+
+    eventHandler<Stock>(name = "STOCK_INSERT") {
+        onCommit { event ->
+            entityDb.insert(event.details)
+            ack()
+        }
+    }
+
+    eventHandler<Stock>(name = "STOCK_MODIFY") {
+        onCommit { event ->
+            entityDb.modify(event.details)
+            ack()
+        }
+    }
+
+    eventHandler<Stock>(name = "STOCK_DELETE") {
+        onCommit { event ->
+            entityDb.delete(event.details)
+            ack()
+        }
+    }
+
+    eventHandler<Order>(name = "ORDER_INSERT", transactional = true) {
+        schemaValidation =  false
+        onCommit { event ->
+            entityDb.insert(event.details)
+            ack()
+        }
+    }
+
+    eventHandler<Order>(name = "ORDER_MODIFY", transactional = true) {
+        onCommit { event ->
+            entityDb.modify(event.details)
+            ack()
+        }
+    }
+
+    eventHandler<Order>(name = "ORDER_CANCEL", transactional = true) {
+        onCommit { event ->
+            entityDb.delete(event.details)
+            ack()
+        }
+    }
 }
 
 
