@@ -1,35 +1,33 @@
-import {html, repeat} from '@microsoft/fast-element';
-import type {MarketdataComponent} from './playground';
+import {html, ref} from '@microsoft/fast-element';
+import {Playground} from './playground';
+import {playgroundStyles} from './playground.styles';
+import {sync} from '@genesislcap/foundation-utils';
 
-export const marketDataComponent = html<MarketdataComponent>`
-  <div class="header">
-    <h3>My marketdata component</h3>
-    <ul>
-    ${repeat(x => x.instruments, html<string>`
-      <li>
-        Instrument from static Array &nbsp;
-        <span class="instrument-name">${x => x}</span>&nbsp;
-        <span class="instrument-price">${(x, c) => c.parent.getLastPriceRealTime(x)}</span>
-      </li>
-    `, {positioning: true})}
+export const myTemplate = html<Playground>`
+    <zero-button @click=${(x) => x.openModalCounterparty()}>Add new counterparty</zero-button>
+    <zero-button @click=${(x) => x.openModalInstrument()}>Add new instrument</zero-button>
 
-    ${repeat(x => x.allInstruments, html<{name: any, price: any}>`
-      <li>
-        Instrument from Server Resources&nbsp;
-        <span class="instrument-name">${x => x.name}</span>&nbsp;
-        <span class="instrument-price">${x => x.price}</span>
-      </li>
-    `, {positioning: true})}
-    </ul>
+    <zero-modal ${ref('counterpartyModal')} position="right" id="stockModal" class="ScrollOn">
+        Insert new counterparty
+        <form id="FormsModal">
+            <zero-text-field :value=${sync((x) => x.counterpartyId)}>Counterparty Id</zero-text-field>
+            <zero-text-field :value=${sync((x) => x.counterpartyName)}>Company name</zero-text-field>
+            <zero-text-field :value=${sync((x) => x.counterpartyLei)}>Ticker Symbol</zero-text-field>
+            <zero-button @click=${(x) => x.addNewCounterparty()}>Submit</zero-button>
+        </form>
+    </zero-modal>
+    <zero-modal ${ref('instrumentModal')} position="right" id="stockModal" class="ScrollOn">
+        Insert new Instrument
+        <form id="FormsModal">
+            <zero-text-field :value=${sync((x) => x.instrumentId)}>Id</zero-text-field>
+            <zero-text-field :value=${sync((x) => x.instrumentName)}>Company name</zero-text-field>
+            <zero-text-field :value=${sync((x) => x.instrumentMarketId)}>Company name</zero-text-field>
+            <zero-text-field :value=${sync((x) => x.instrumentCountryCode)}>Company name</zero-text-field>
+            <zero-text-field :value=${sync((x) => x.instrumentCurrencyId)}>Company name</zero-text-field>
+            <zero-text-field :value=${sync((x) => x.instrumentAssetClass)}>Company name</zero-text-field>
+            <zero-button @click=${(x) => x.addNewInstrument()}>Submit</zero-button>
+        </form>
+    </zero-modal>
 
-    <!--
-    <ui-training-design-system-provider>
-      <ui-training-button appearance="training-green">UI Training Design System Button</ui-training-button>
-    </ui-training-design-system-provider>
-
-    <zero-design-system-provider>
-      <zero-button appearance="primary-gradient">Zero Design System Button</zero-button>
-    </zero-design-system-provider>
-    -->
-  </div>
+    <div id="BannerPlaceholder"></div>
 `;

@@ -1,51 +1,121 @@
+import {customElement, FASTElement, observable} from '@microsoft/fast-element'
+import {myTemplate as template} from './playground.template'
+import {playgroundStyles as styles} from './playground.styles'
+import {Modal, Banner} from '@genesislcap/foundation-zero';
 import {Connect} from '@genesislcap/foundation-comms';
-import {customElement, FASTElement, observable} from '@microsoft/fast-element';
-import {marketdataComponentCSS} from './playground.styles';
-import {marketDataComponent} from './playground.template';
-
-const msftPrice = 101.23;
-const aaplPrice = 227.12;
 
 @customElement({
-  name: 'marketdata-component',
-  template: marketDataComponent,
-  styles: marketdataComponentCSS
+    name: 'playground-route',
+    template,
+    styles
 })
-export class MarketdataComponent extends FASTElement {
-    @Connect connect: Connect;
 
-    @observable instruments: String[] = ['MSFT', 'AAPL'];
-    @observable lastPrices: number[] = [msftPrice, aaplPrice];
+export class Playground extends FASTElement {
 
-    @observable public allInstruments: Array<{id: any, name: any, price: any}> = []; // add this property
+    @Connect connection: Connect;
+    counterpartyModal: Modal;
+    instrumentModal: Modal;
 
-    public async connectedCallback() { // add this method to Order class
-      super.connectedCallback(); // FASTElement implementation
+    @observable counterpartyId: string;
+    @observable counterpartyName: string;
+    @observable counterpartyLei: string;
+    @observable instrumentId: string;
+    @observable instrumentName: string;
+    @observable instrumentMarketId: string;
+    @observable instrumentCountryCode: string;
+    @observable instrumentCurrencyId: string;
+    @observable instrumentAssetClass: string;
 
-      await this.setAllAllInstruments();
+    openModalCounterparty(){
+        this.counterpartyModal.show();
     }
 
-    public getLastPriceRealTime(instrumentName: string) {
-      const instrumentIndex = this.instruments.indexOf(instrumentName);
-      return this.lastPrices[instrumentIndex];
+    openModalInstrument(){
+        this.instrumentModal.show();
     }
 
-    public async getMarketDataLastPrice(instrumentId: string) {
-      const msg = await this.connect.request('INSTRUMENT_MARKET_DATA', {
-        REQUEST: {
-          INSTRUMENT_ID: instrumentId,
-        }});
-      console.log(msg);
-
-      return msg.REPLY[0] ? msg.REPLY[0].LAST_PRICE : 'N/A';
+    async addNewCounterparty(){
+        const insertCounterparty = await this.connection.commitEvent('EVENT_COUNTERPARTY_INSERT', {
+            DETAILS: {
+                COUNTERPARTY_ID: this.counterpartyId,
+                COUNTERPARTY_NAME: this.counterpartyName,
+                COUNTERPARTY_LEI: this.counterpartyLei,
+                ENABLED: true
+            }
+        })
+        if (insertCounterparty.MESSAGE_TYPE == 'EVENT_ACK'){
+            this.createBanner("COUNTERPARTY CREATED: " + this.counterpartyId)
+            this.counterpartyId = '';
+            this.counterpartyName = '';
+            this.counterpartyLei = '';
+            this.counterpartyModal.close();
+        } else if (insertCounterparty.MESSAGE_TYPE == 'EVENT_NACK'){
+            this.createBanner("ERROR: " + insertCounterparty.ERROR[0].CODE)
+        }
+    }
+    async addNewInstrument(){
+        const insertInstrument = await this.connection.commitEvent('EVENT_INSTRUMENT_INSERT', {
+            DETAILS: {
+                INSTRUMENT_ID: this.instrumentId,
+                INSTRUMENT_NAME: this.instrumentName,
+                COUNTRY_CODE: this.instrumentCountryCode,
+                CURRENCY_ID: this.instrumentCurrencyId,
+                ASSET_CLASS: this.instrumentAssetClass,
+                MARKET_ID: this.instrumentMarketId,
+            }
+        })
+        if (insertInstrument.MESSAGE_TYPE == 'EVENT_ACK'){
+            this.createBanner("INSTRUMENT CREATED: " + this.instrumentId)
+            this.instrumentId = ''
+            this.instrumentName = ''
+            this.instrumentCountryCode = ''
+            this.instrumentCurrencyId = ''
+            this.instrumentAssetClass = ''
+            this.instrumentMarketId = ''
+            this.instrumentModal.close();
+        } else if (insertInstrument.MESSAGE_TYPE == 'EVENT_NACK'){
+            this.createBanner("ERROR: " + insertInstrument.ERROR[0].CODE)
+        }
     }
 
-    private async setAllAllInstruments() {
-      const msg = await this.connect.snapshot('ALL_INSTRUMENTS'); // get a snapshot of data from ALL_INTRUMENTS data server
-      msg.ROW.forEach((instrument) => {
-        this.getMarketDataLastPrice(instrument.INSTRUMENT_ID).then( (price) => {
-          this.allInstruments.push({id: instrument.INSTRUMENT_ID, name: instrument.INSTRUMENT_NAME, price: price});
+
+    createBanner(text: string){
+
+        // Creates the banner element
+        const bannerElement = document.createElement('zero-banner');
+        bannerElement.id = 'banner_' + Math.random().toString(36).substr(2, 9);
+
+        // Sets the HTML content of the banner element
+        bannerElement.innerHTML = `
+            <div slot="content">
+                ${text}
+            </div>
+            <alpha-button id="button ${bannerElement.id}" slot="action" appearance="lightweight">Close Banner</alpha-button>
+        `;
+
+        bannerElement.style.position = 'fixed';
+        bannerElement.style.top = '0';
+        bannerElement.style.left = '50%'; // Center the banner horizontally
+        bannerElement.style.transform = 'translateX(-50%)'; // Center the banner horizontally
+        bannerElement.style.width = '30%';
+        bannerElement.style.zIndex = '9999';
+
+        // Gets the placeholder div where you want to append the banner
+        const placeholderDiv = this.shadowRoot.getElementById('BannerPlaceholder');
+
+        // Appends the banner element to the div
+        placeholderDiv.appendChild(bannerElement)
+
+        // Adds dismiss event to the button action
+        const actionButton = this.shadowRoot.getElementById("button " + bannerElement.id);
+        const tempBanner = this.shadowRoot.getElementById(bannerElement.id) as Banner
+
+        actionButton.addEventListener('click', function() {
+            tempBanner.dismiss();
         });
-      });
+
+        setTimeout(function() {
+            tempBanner.dismiss();
+        }, 5000);
     }
 }

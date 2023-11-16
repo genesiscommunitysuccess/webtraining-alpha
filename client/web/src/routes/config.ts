@@ -12,12 +12,14 @@ import {Route, RouterConfiguration} from '@microsoft/fast-router';
 import {defaultLayout, loginLayout} from '../layouts';
 import {Home} from './home/home';
 import {NotFound} from './not-found/not-found';
-import {MarketdataComponent} from './playground/playground';
+import {Playground} from './playground/playground';
 import {Order} from './order/order';
 import {Trade} from './trade/trade';
 import {UserComponent} from './user/user';
 import {Reporting} from '@genesislcap/foundation-reporting';
 import { CustomOrderPage } from './custom-order/custom-order';
+import {UserRegistration} from './userRegistration/userRegistration';
+import {StockRegistration} from './stockRegistration/stockRegistration';
 
 type RouterSettings = {
   autoAuth?: boolean;
@@ -41,6 +43,9 @@ export class MainRouterConfig extends RouterConfiguration<RouterSettings> {
     {index: 5, path: 'trade', title: 'Trade', icon: 'home', variant: 'solid'},
     {index: 6, path: 'custom-order', title: 'Custom Order Grid', icon: 'home', variant: 'solid'},
     {index: 7, path: 'user', title: 'User', icon: 'home', variant: 'solid'},
+    {index: 8, path: 'userRegistration', title: 'User Registration', icon: 'user-plus', variant: 'solid'},
+    {index: 9, path: 'stockRegistration', title: 'Stock Registration', icon: 'money-bill', variant: 'solid'},
+
   ];
 
   public configure() {
@@ -77,12 +82,14 @@ export class MainRouterConfig extends RouterConfiguration<RouterSettings> {
         childRouters: true,
       },      {path: 'home', element: Home, title: 'Home', name: 'home', settings: commonSettings},
       {path: 'not-found', element: NotFound, title: 'Not Found', name: 'not-found'},
-      {path: 'playground', element: MarketdataComponent, title: 'Playground', name: 'playground', settings: commonSettings},
+      {path: 'playground', element: Playground, title: 'Playground', name: 'playground', settings: commonSettings},
       {path: 'order', element: Order, title: 'Order', name: 'order', settings: commonSettings},
       {path: 'reporting', element: Reporting, title: 'Reporting', name: 'reporting', settings: commonSettings},
       {path: 'trade', element: Trade, title: 'Trade', name: 'trade', settings: commonSettings},
       {path: 'custom-order', element: CustomOrderPage, title: 'Custom Order', name: 'custom-order', settings: commonSettings},
       {path: 'user', element: UserComponent, title: 'User', name: 'user', settings: commonSettings},
+      {path: 'userRegistration', element: UserRegistration, title: 'User Registration', name: 'userRegistration', settings: commonSettings},
+      {path: 'stockRegistration', element: StockRegistration, title: 'Stock Registration', name: 'stockRegistration', settings: commonSettings},
     );
 
     const auth = this.auth;

@@ -25,9 +25,11 @@ dataServer {
             trade.price!! > 0.0
         }
     }
+
     query("ALL_COUNTERPARTIES", COUNTERPARTY)
     query("ALL_INSTRUMENTS", INSTRUMENT)
     query("ALL_POSITIONS", POSITION)
+    query("ALL_STOCKS", STOCK)
     query("ALL_ORDERS", ORDER)
 
 }
