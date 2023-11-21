@@ -1,7 +1,7 @@
 import {Connect, ConnectConfig, defaultConnectConfig} from '@genesislcap/foundation-comms';
 import {Navigation} from '@genesislcap/foundation-header';
 import {baseLayerLuminance, StandardLuminance} from '@microsoft/fast-components';
-import {FASTElement, customElement, observable} from '@microsoft/fast-element';
+import {FASTElement, customElement, observable, DOM} from '@microsoft/fast-element';
 import {Container, inject, Registration} from '@microsoft/fast-foundation';
 import {DefaultRouteRecognizer} from '@microsoft/fast-router';
 import {DynamicTemplate as template, LoadingTemplate, MainTemplate} from './main.template';
@@ -9,6 +9,8 @@ import {MainStyles as styles} from './main.styles';
 import {MainRouterConfig} from '../routes';
 import * as Components from '../components';
 import {logger} from '../utils';
+import designTokens from '../styles/design-tokens.json';
+import { configureDesignSystem } from '@genesislcap/foundation-ui';
 
 const name = 'blank-app';
 
@@ -36,6 +38,9 @@ export class MainApplication extends FASTElement {
     super.connectedCallback();
 
     logger.debug(`${name} is now connected to the DOM`);
+    DOM.queueUpdate(() => {
+      configureDesignSystem(this.provider, designTokens);
+    });
 
     this.registerDIDependencies();
     await this.loadRemotes();
