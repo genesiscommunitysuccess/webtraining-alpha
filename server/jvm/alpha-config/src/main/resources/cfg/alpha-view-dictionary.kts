@@ -37,10 +37,11 @@ views {
 
             derivedField("TRADE_ASSET_CLASS", STRING) {
                 withInput(INSTRUMENT.ASSET_CLASS) {ASSET_CLASS ->
-                    if (ASSET_CLASS == null) {
+                    if (ASSET_CLASS.isNullOrEmpty()) {
                         "UNKOWN"
+                    } else {
+                        ASSET_CLASS
                     }
-                    ASSET_CLASS
                 }
             }
         }
